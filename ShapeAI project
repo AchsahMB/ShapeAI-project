@@ -1,0 +1,90 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled4.ipynb",
+      "provenance": [],
+      "toc_visible": true,
+      "authorship_tag": "ABX9TyMFeY/2zMlVfsi8NxbXRcME",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/AchsahMB/ShapeAI-project/blob/main/ShapeAI%20project\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "cMiuXmuplvFF",
+        "outputId": "dfdf4225-afd2-4b7d-a82a-91d19aea8dff"
+      },
+      "source": [
+        " \n",
+        "import requests\n",
+        "import os\n",
+        "from datetime import datetime\n",
+        " \n",
+        "api_key = '3b339d0f2f10b9ea815285d23940b0d7'\n",
+        "location = input(\"Enter the city name: \")\n",
+        " \n",
+        "complete_api_link = \"https://api.openweathermap.org/data/2.5/weather?q=\"+location+\"&appid=\"+api_key\n",
+        "api_link = requests.get(complete_api_link)\n",
+        "api_data = api_link.json()\n",
+        " \n",
+        " \n",
+        "temp_city = ((api_data['main']['temp']) - 273.15)\n",
+        "weather_desc = api_data['weather'][0]['description']\n",
+        "hmdt = api_data['main']['humidity']\n",
+        "wind_spd = api_data['wind']['speed']\n",
+        "date_time = datetime.now().strftime(\"%d %b %Y | %I:%M:%S %p\")\n",
+        " \n",
+        "print (\"________________________________________________________________\")\n",
+        "print (\"Weather Stats for - {}  || {}\".format(location.upper(), date_time))\n",
+        "print (\"________________________________________________________________\")\n",
+        " \n",
+        " \n",
+        "print (\"# Current temperature is: {:.2f} deg C\".format(temp_city))\n",
+        "print (\"# Current weather desc  :\", weather_desc)\n",
+        "print (\"# Current Humidity      :\", hmdt, '%')\n",
+        "print (\"# Current wind speed    :\", wind_spd ,'kmph')\n",
+        "with open('Weather.txt', 'w') as f:f.write(\"city: \"+location+\"\\n\"+\"Temperature :\"+str(temp_city)+\"\\nWeather Description :\"+weather_desc+\"\\nHumidity :\"+str(hmdt)+\" %\"+\"\\nWind speed :\"+str(wind_spd)+str(wind_spd)+\" kmph\")"
+      ],
+      "execution_count": 5,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Enter the city name: Kerala\n",
+            "________________________________________________________________\n",
+            "Weather Stats for - KERALA  || 23 Jun 2021 | 11:37:27 AM\n",
+            "________________________________________________________________\n",
+            "# Current temperature is: 28.82 deg C\n",
+            "# Current weather desc  : overcast clouds\n",
+            "# Current Humidity      : 84 %\n",
+            "# Current wind speed    : 2.29 kmph\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    }
+  ]
+}
